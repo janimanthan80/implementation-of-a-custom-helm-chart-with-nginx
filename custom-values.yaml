@@ -1,0 +1,30 @@
+controller:
+  name: infra-nginx-ingress-trial
+
+  # Configuration to only expose ingresses with the specific annotation
+  config:
+    annotation-filter: 
+      nginx-trial: true
+
+  # Service configuration to expose the ingress controller
+  service:
+    enabled: true
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+      service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+
+  # Ingress Class settings
+  ingressClassResource:
+    name: nginx
+    enabled: true
+    default: true
+    controllerValue: "k8s.io/nginx-trial"
+
+# Optional: Customizing replica count and resources
+replicaCount: 2
+
+# Configuring default backend
+defaultBackend:
+  enabled: true
+
